@@ -1,0 +1,138 @@
+"""
+Direct the client to resolve this field locally, either from the cache or local resolvers.
+"""
+directive @client(
+  """
+  When true, the client will never use the cache for this value. See
+  https://www.apollographql.com/docs/react/essentials/local-state/#forcing-resolvers-with-clientalways-true
+  """
+  always: Boolean
+) on FIELD | FRAGMENT_DEFINITION | INLINE_FRAGMENT
+
+"""
+Export this locally resolved field as a variable to be used in the remainder of this query. See
+https://www.apollographql.com/docs/react/essentials/local-state/#using-client-fields-as-variables
+"""
+directive @export(
+  """The variable name to export this field as."""
+  as: String!
+) on FIELD
+
+"""
+Specify a custom store key for this result. See
+https://www.apollographql.com/docs/react/advanced/caching/#the-connection-directive
+"""
+directive @connection(
+  """Specify the store key."""
+  key: String!
+
+  """
+  An array of query argument names to include in the generated custom store key.
+  """
+  filter: [String!]
+) on FIELD
+
+""""""
+input AddFriendsInput {
+  """"""
+  first: ID!
+
+  """"""
+  second: ID!
+}
+
+""""""
+type Cat implements Pet {
+  """"""
+  id: ID!
+
+  """"""
+  name: String!
+
+  """"""
+  makeSound: String!
+
+  """"""
+  beLazy: String!
+}
+
+""""""
+type Dog implements Pet {
+  """"""
+  id: ID!
+
+  """"""
+  name: String!
+
+  """"""
+  makeSound: String!
+
+  """"""
+  barkLoudly: String!
+}
+
+""""""
+type Mutation {
+  """"""
+  addPerson(input: PersonInput!): Person!
+
+  """"""
+  addFriends(input: AddFriendsInput!): Boolean!
+
+  """"""
+  generateData: [Person!]!
+}
+
+""""""
+type Person {
+  """"""
+  id: ID!
+
+  """"""
+  name: String!
+
+  """"""
+  friends: [Person!]!
+
+  """"""
+  pets: [Pet!]!
+}
+
+""""""
+input PersonInput {
+  """"""
+  name: String!
+}
+
+""""""
+interface Pet {
+  """"""
+  id: ID!
+
+  """"""
+  name: String!
+
+  """"""
+  makeSound: String!
+}
+
+""""""
+type Query {
+  """"""
+  allPeople: [Person!]!
+
+  """"""
+  person(id: ID!): Person!
+
+  """"""
+  search(input: SearchInput!): [SearchResult!]!
+}
+
+""""""
+input SearchInput {
+  """"""
+  queryString: String!
+}
+
+""""""
+union SearchResult = Dog | Cat | Person
