@@ -1,0 +1,14 @@
+fragment petInfo on Person {
+  pets {
+    id
+    name
+    makeSound
+    ... on Dog {
+      barkLoudly
+    }
+    ... on Cat {
+      beLazy
+    }
+  }
+}
+

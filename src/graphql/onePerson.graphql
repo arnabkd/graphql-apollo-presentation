@@ -1,0 +1,14 @@
+#import "./petInfo.graphql"
+query personQuery($input: ID!){
+  person(id: $input) {
+    id
+    name
+    description
+    dateOfBirth
+    friends {
+      id
+      name
+    }
+    ... petInfo
+  }
+}

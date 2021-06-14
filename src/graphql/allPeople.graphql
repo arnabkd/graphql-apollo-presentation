@@ -2,24 +2,6 @@ query allPeople {
   allPeople {
     id
     name
-    friends {
-      id
-      name
-    }
-    ... petInfo
   }
 }
 
-fragment petInfo on Person {
-  pets {
-    id
-    name
-    makeSound
-    ... on Dog {
-      barkLoudly
-    }
-    ... on Cat {
-      beLazy
-    }
-  }
-}
