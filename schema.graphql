@@ -56,6 +56,9 @@ type Cat implements Pet {
   beLazy: String!
 }
 
+"""RFC3339: full-date"""
+scalar Date
+
 """"""
 type Dog implements Pet {
   """"""
@@ -90,6 +93,12 @@ type Person {
 
   """"""
   name: String!
+
+  """"""
+  description: String!
+
+  """"""
+  dateOfBirth: Date!
 
   """"""
   friends: [Person!]!

@@ -1,13 +1,9 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { makeStyles } from '@material-ui/styles'
-import {
-  BrowserRouter as Router,
-  Link,
-  Route,
-  Switch
-} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css'
-import { PeopleWithFriendsAndPets } from './components/PeopleWithFriendsAndPets'
+import { AllPeople } from './components/AllPeople'
+import { Footer } from './components/Footer'
 import { Person } from './components/Person'
 
 const client = new ApolloClient({
@@ -32,11 +28,11 @@ function App() {
 
   return (
     <div>
-      <Router>        
+      <Router>
         <ApolloProvider client={client}>
           <Switch>
-            <Route path='/peopleWithFriendsAndPets'>
-              <PeopleWithFriendsAndPets />
+            <Route path='/' exact>
+              <AllPeople />
             </Route>
             <Route path='/person/:id'>
               <Person />

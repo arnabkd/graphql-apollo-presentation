@@ -1,16 +1,4 @@
 import { useQuery } from '@apollo/client/react/hooks'
-import { useParams } from 'react-router-dom'
-import clsx from 'clsx'
-import {
-  person as PersonQuery,
-  personVariables as PersonQueryVariables,
-} from '../graphql/__generated__/person'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import ShareIcon from '@material-ui/icons/Share'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
-import { loader as queryLoader } from 'graphql.macro'
-import { red } from '@material-ui/core/colors'
 import {
   AppBar,
   Avatar,
@@ -19,15 +7,24 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
-  Collapse,
   IconButton,
+  List,
+  ListItem,
   makeStyles,
   Toolbar,
   Typography,
 } from '@material-ui/core'
-import React from 'react'
+import { red } from '@material-ui/core/colors'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import RefreshIcon from '@material-ui/icons/Refresh'
+import { useParams } from 'react-router-dom'
+import { onePersonQuery } from '../graphql/queries'
+import {
+  personQuery as PersonQuery,
+  personQueryVariables as PersonQueryVariables,
+} from '../graphql/__generated__/personQuery'
 
-const query = queryLoader('../graphql/onePerson.graphql')
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -59,9 +56,11 @@ export const Person = () => {
   const { data, loading, refetch } = useQuery<
     PersonQuery,
     PersonQueryVariables
-  >(query, {
+  >(onePersonQuery, {
     variables: { input: id || '1' },
   })
+
+  const person = data?.person
 
   return (
     <>
@@ -91,19 +90,45 @@ export const Person = () => {
         <CardMedia
           className={classes.media}
           image='http://placeimg.com/640/480/people'
-          title='Paella dish'
+          title={data?.person.name}
         />
         <CardContent>
           <Typography variant='body2' color='textSecondary' component='p'>
             {data?.person.description}
+            <p>
+              {`${person?.name} has ${person?.friends.length} friends`}
+              <List>
+                {person?.friends.map((friend) => (
+                  <ListItem
+                    divider
+                    key={friend.id}
+                  >{` ${friend.name}`}</ListItem>
+                ))}
+              </List>
+            </p>
+            <p>
+              {`${person?.name} has ${person?.pets.length} pets`}
+              <List>
+                {person?.pets.map((pet) => (
+                  <ListItem divider key={pet.id}>
+                    {pet.__typename === 'Dog' && '🐶'}
+                    {pet.__typename === 'Cat' && '🐱'}
+                    {` ${pet.name}`}
+                  </ListItem>
+                ))}
+              </List>
+            </p>
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
           <IconButton aria-label='add to favorites'>
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label='share'>
-            <ShareIcon />
+          <IconButton
+            aria-label='refetch'
+            onClick={async () => await refetch()}
+          >
+            <RefreshIcon />
           </IconButton>
         </CardActions>
       </Card>
