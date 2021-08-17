@@ -10,3 +10,4 @@ export const onePersonQuery = queryLoader('../graphql/onePerson.graphql')
  * Mutations
  */
 export const generateDataMutation = queryLoader('../graphql/generateData.graphql')
+export const wipeDataMutation = queryLoader('../graphql/wipeData.graphql')

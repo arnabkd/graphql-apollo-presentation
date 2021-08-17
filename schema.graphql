@@ -1,3 +1,9 @@
+"""Exposes a URL that specifies the behaviour of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behaviour of this scalar."""
+  url: String!
+) on SCALAR
+
 """
 Direct the client to resolve this field locally, either from the cache or local resolvers.
 """
@@ -32,116 +38,66 @@ directive @connection(
   filter: [String!]
 ) on FIELD
 
-""""""
 input AddFriendsInput {
-  """"""
   first: ID!
-
-  """"""
   second: ID!
 }
 
-""""""
 type Cat implements Pet {
-  """"""
   id: ID!
-
-  """"""
   name: String!
-
-  """"""
   makeSound: String!
-
-  """"""
   beLazy: String!
 }
 
 """RFC3339: full-date"""
 scalar Date
 
-""""""
 type Dog implements Pet {
-  """"""
   id: ID!
-
-  """"""
   name: String!
-
-  """"""
   makeSound: String!
-
-  """"""
   barkLoudly: String!
 }
 
-""""""
 type Mutation {
-  """"""
   addPerson(input: PersonInput!): Person!
-
-  """"""
   addFriends(input: AddFriendsInput!): Boolean!
-
-  """"""
   generateData: [Person!]!
+  wipeData: WipeDataPayload!
 }
 
-""""""
 type Person {
-  """"""
   id: ID!
-
-  """"""
   name: String!
-
-  """"""
   description: String!
-
-  """"""
   dateOfBirth: Date!
-
-  """"""
   friends: [Person!]!
-
-  """"""
   pets: [Pet!]!
 }
 
-""""""
 input PersonInput {
-  """"""
   name: String!
 }
 
-""""""
 interface Pet {
-  """"""
   id: ID!
-
-  """"""
   name: String!
-
-  """"""
   makeSound: String!
 }
 
-""""""
 type Query {
-  """"""
   allPeople: [Person!]!
-
-  """"""
   person(id: ID!): Person!
-
-  """"""
   search(input: SearchInput!): [SearchResult!]!
 }
 
-""""""
 input SearchInput {
-  """"""
   queryString: String!
 }
 
-""""""
 union SearchResult = Dog | Cat | Person
+
+type WipeDataPayload {
+  success: Boolean!
+}

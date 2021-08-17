@@ -1,9 +1,7 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
-import { makeStyles } from '@material-ui/styles'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css'
 import { AllPeople } from './components/AllPeople'
-import { Footer } from './components/Footer'
 import { Person } from './components/Person'
 
 const client = new ApolloClient({
@@ -11,21 +9,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: 1,
-  },
-  title: {
-    flexGrow: 1,
-  },
-}))
-
 function App() {
-  const classes = useStyles()
-
   return (
     <div>
       <Router>

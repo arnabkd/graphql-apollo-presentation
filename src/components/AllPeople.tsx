@@ -38,25 +38,30 @@ export const AllPeople = () => {
           justify='center'
           direction='row'
         >
-          {data?.allPeople.map((person) => (
-            <Grid item xs={3} key={person.id}>
-              <Card>
-                <CardHeader
-                  avatar={<Avatar>{person.name.charAt(0)}</Avatar>}
-                  title={person.name}
-                ></CardHeader>
-                <CardContent>
-                  <Link
-                    to={`person/${person.id}`}
-                    onClick={() => console.log('click')}
-                    color='inherit'
-                  >
-                    Show more
-                  </Link>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
+          {data?.allPeople.map((person) => {
+            const [first, last] = person.name.split(' ')
+            return (
+              <Grid item xs={3} key={person.id}>
+                <Card>
+                  <CardHeader
+                    avatar={
+                      <Avatar>{`${first.charAt(0)}${last.charAt(0)}`}</Avatar>
+                    }
+                    title={person.name}
+                  ></CardHeader>
+                  <CardContent>
+                    <Link
+                      to={`person/${person.id}`}
+                      onClick={() => console.log('click')}
+                      color='inherit'
+                    >
+                      Show more
+                    </Link>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )
+          })}
         </Grid>
       </div>
       <hr />
@@ -64,4 +69,3 @@ export const AllPeople = () => {
     </>
   )
 }
-
