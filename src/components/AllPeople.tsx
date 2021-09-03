@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/client'
 import {
   AppBar,
   Avatar,
@@ -10,15 +9,16 @@ import {
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import { Link } from 'react-router-dom'
-import { allPeopleQuery } from '../graphql/queries'
-import { allPeople as AllPeopleQuery } from '../graphql/__generated__/allPeople'
+import { useAllPeopleQuery } from '../graphql/generated/allPeople.generated'
 import { awaitRefetch } from '../helper'
 import { Footer } from './Footer'
 
 export const AllPeople = () => {
-  const { data, loading, refetch } = useQuery<AllPeopleQuery>(allPeopleQuery, {
-    notifyOnNetworkStatusChange: true,
-  })
+  const { data, loading, refetch } = useAllPeopleQuery(
+    {
+      notifyOnNetworkStatusChange: false,
+    },
+  )
 
   return (
     <>
@@ -52,7 +52,6 @@ export const AllPeople = () => {
                   <CardContent>
                     <Link
                       to={`person/${person.id}`}
-                      onClick={() => console.log('click')}
                       color='inherit'
                     >
                       Show more

@@ -1,18 +1,16 @@
-import { useMutation } from '@apollo/client'
 import { IconButton } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import ClearIcon from '@material-ui/icons/ClearAll'
-import { generateData } from '../graphql/__generated__/generateData'
-import { generateDataMutation, wipeDataMutation } from '../graphql/queries'
-import { wipeData } from '../graphql/__generated__/wipeData'
+import { useGenerateDataMutation } from '../graphql/generated/generateData.generated'
+import { useWipeDataMutation } from '../graphql/generated/wipeData.generated'
 
 export const Footer = ({ onComplete }: { onComplete: () => Promise<any> }) => {
-  const [generateData, { loading: generateDataLoading }] = useMutation<generateData>(generateDataMutation, {
-    onCompleted: onComplete,
-    onError: onComplete,
-  })
 
-  const [wipeData, { loading : wipeDataLoading }] = useMutation<wipeData>(wipeDataMutation, {
+  const [generateData, { loading: generateDataLoading }] = useGenerateDataMutation(
+    {onCompleted: onComplete, onError: onComplete}
+  )
+
+  const [wipeData, { loading : wipeDataLoading }] = useWipeDataMutation({
     onCompleted: onComplete,
     onError: onComplete,
   })

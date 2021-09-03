@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/client/react/hooks'
 import {
   AppBar,
   Avatar,
@@ -19,11 +18,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import { useParams } from 'react-router-dom'
-import { onePersonQuery } from '../graphql/queries'
-import {
-  personQuery as PersonQuery,
-  personQueryVariables as PersonQueryVariables,
-} from '../graphql/__generated__/personQuery'
+import { usePersonQueryQuery } from '../graphql/generated/onePerson.generated'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,10 +48,7 @@ export const Person = () => {
 
   const classes = useStyles()
 
-  const { data, loading, refetch } = useQuery<
-    PersonQuery,
-    PersonQueryVariables
-  >(onePersonQuery, {
+  const { data, loading, refetch } = usePersonQueryQuery({
     variables: { input: id || '1' },
   })
 
